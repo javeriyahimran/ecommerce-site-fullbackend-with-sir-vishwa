@@ -59,10 +59,11 @@ try{
 //stich the route to the server
 
 require("./routes/auth.routes")(app) //ya hmny route ko app ko dya h.call routes and passing app object.
-require("./routes/category.routes")(app)  //ya hmny route ko app ko dya h.call routes and passing app object.
+require("./routes/category.routes")(app)
+require("./routes/cart.routes")(app)
+ //ya hmny route ko app ko dya h.call routes and passing app object.
 app.listen(server_config.PORT,()=>{
     console.log("server is started at Port:",server_config)
 })
-
 
 //ports customize hoty h yani changeable tou unko hm is trh config mai rkhty h

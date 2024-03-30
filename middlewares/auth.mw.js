@@ -3,6 +3,9 @@
 const user_model = require("../models/user.model");
 const jwt=require("jsonwebtoken")
 const auth_config=require("../config/auth.config")
+
+//for signup
+
 const verifiedSignup = async (req, res, next) => {
   try {
     //check for the name
@@ -38,6 +41,7 @@ const verifiedSignup = async (req, res, next) => {
     });
   }
 };
+//for signin
 
 const verifiedSignin = async (req, res, next) => {
   if (!req.body.userId) {
@@ -60,13 +64,13 @@ const verifyToken = (req, res, next) => {
  
   if (!token) {
     return res.status(403).send({
-      //402 yni bad request h
+      //403 yni bad request h
       message: "token not found :UnAuthorized",
     });
   }
 
   //token is valid or not
-  jwt.verify(token.auth_config.secret,async(err,decoded)=>{
+  jwt.verify(token,auth_config.secret,async(err,decoded)=>{
 if(err){
     return res.status(401).send({
         message:"unAuthorized!"
@@ -78,15 +82,31 @@ if(!user){
         message:"unAuthorized! user for this token doesn't exist"
     })
 }
+//set the user into the info body
+req.user=user //ya user ko req.body mai set krdega
+
+  //then move to the next
 next()
   })
  
 
-  //then move to the next
+
 };
+
+const isAdmin=(req,res,next)=>{
+    const user=req.user
+    if(user&&user.userType=="ADMIN"){
+next()
+    }else{
+        return res.status(403).send({
+            message:"only ADMIN users are allow to access this endpoint"
+        })
+    }
+}
 
 module.exports = {
   verifiedSignup: verifiedSignup,
   verifiedSignin: verifiedSignin,
-  verifyToken:verifyToken
+  verifyToken:verifyToken,
+  isAdmin:isAdmin
 };

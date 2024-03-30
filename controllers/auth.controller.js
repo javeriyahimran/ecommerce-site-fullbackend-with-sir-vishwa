@@ -69,7 +69,7 @@ if(!isPasswordValid){
 }
 //using jwt we will create access token with a given ttl(time to live) and return
 const token=jwt.sign({id:user.userId},secret.secret,{
-    expiresIn:120 //yani ya 2min mai expires hojega.
+    expiresIn:120 //yani ya 2min mai expire hojega.
 })
 
 res.status(201).send({

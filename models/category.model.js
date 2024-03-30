@@ -10,7 +10,28 @@ const categorySchema=new mongoose.Schema({
     description:{
         type:String,
         required:true
-    } 
+    } ,
+    quantity:{
+        type:Number,
+        required:true
+    },
+
+    price:{
+        type:Number,
+        required:true
+    },
+//     category:{
+//         type:mongoose.Schema.Types.ObjectId,
+//         ref:'categories',
+//         required:true
+//    },
+    availability:{
+        type:Boolean,
+        required:true
+    },
+    shippingInformation:{
+        type:String
+    }
 },{timestamps:true,versionKey:false})
 
 const Category=mongoose.model("Category",categorySchema)
